@@ -1,0 +1,39 @@
+#version: "v3"
+
+services:
+  app:
+    image: php:8.2-fpm
+    volumes:
+      - .:/srv
+    depends_on:
+      - db
+
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - .:/srv
+    ports:
+      - "8000:80"
+    depends_on:
+      - app
+
+  db:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_DATABASE: med_call
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  mailhog:
+    image: mailhog/mailhog
+    logging:
+        driver: none
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+
+volumes:
+  db_data: {}

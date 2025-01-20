@@ -19,6 +19,11 @@
         "symfony/yaml": "7.2.*"
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.68",
+        "phpstan/extension-installer": "^1.4",
+        "phpstan/phpstan": "^2.1",
+        "phpstan/phpstan-doctrine": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0",
         "symfony/debug-bundle": "7.2.*",
         "symfony/maker-bundle": "^1.62",
         "symfony/monolog-bundle": "^3.0",
@@ -29,7 +34,8 @@
         "allow-plugins": {
             "php-http/discovery": true,
             "symfony/flex": true,
-            "symfony/runtime": true
+            "symfony/runtime": true,
+            "phpstan/extension-installer": true
         },
         "bump-after-update": true,
         "sort-packages": true
@@ -64,6 +70,11 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "fix": "php-cs-fixer fix",
+        "check": [
+            "phpstan",
+            "php-cs-fixer fix --dry-run --diff"
         ]
     },
     "conflict": {
